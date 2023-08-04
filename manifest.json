@@ -1,0 +1,25 @@
+{
+  "name": "Githb User Activity",
+  "version": "1.0.0",
+  "description": "",
+  "offline_enabled": true,
+  "manifest_version": 3,
+  "author": "",
+  "action": {},
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://github.com/*"],
+      "js": ["jquery.js", "contentScript.js"],
+      "css": ["content.css"]
+    }
+  ],
+  "permissions": ["tabs", "activeTab", "scripting"],
+  "host_permissions": [
+    "https://www.googleapis.com/*",
+    "https://gstatic.com/*",
+    "*://*/*"
+  ]
+}
