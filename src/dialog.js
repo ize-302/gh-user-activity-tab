@@ -1,3 +1,6 @@
+// are we viewing a profile page?
+let isProfile = document.querySelector('body').classList.contains('page-profile')
+
 // create activities dialog element
 var dialog = document.createElement("dialog");
 dialog.setAttribute('style', 'position: fixed; border: none; top: 0; left: 0; z-index: 10; background: transparent; width: 100%; height: 100vh; padding: 0;')
@@ -9,7 +12,8 @@ function closeDialog() {
 
 // create overlay for dialog, append to dialog
 let overlay = document.createElement("div");
-overlay.setAttribute('style', 'position: relative; background: rgba(0,0,0,0.4); width: 100%; height: 100%')
+overlay.setAttribute('class', 'Overlay-backdrop--side')
+overlay.setAttribute('style', 'position: relative; width: 100%; height: 100%')
 overlay.addEventListener('click', function () {
   closeDialog()
 })
@@ -17,8 +21,8 @@ dialog.appendChild(overlay)
 
 // content for dialog, append to dialog
 let dialogContent = document.createElement("div")
-dialogContent.setAttribute('class', 'dialog-content-animation')
-dialogContent.setAttribute('style', 'background: #161c22; position: absolute; z-ndex: 99; border-right: 1px solid #3E444D; max-width: 500px; width: 100%; top: 0; left: 0; height: 100%')
+dialogContent.setAttribute('class', 'Overlay dialog-content-animation')
+dialogContent.setAttribute('style', 'position: absolute; z-index: 999; border-top-left-radius: 0; border-bottom-left-radius: 0; max-width: 540px; width: 100%; top: 0; left: 0; height: 100%')
 dialog.appendChild(dialogContent)
 
 // wrapper for dialog heading, append to dialogcontent
@@ -51,26 +55,26 @@ document.querySelector('body').appendChild(dialog)
 
 // INSERT NEW ACTIVITIES TAB WHEN PAGE IS LOADED
 $(document).ready(() => {
-  var parentElem = $("ul.UnderlineNav-body")[0];
-  // create new li element for activities
-  var activitiesTabElem = document.createElement("li");
-  activitiesTabElem.setAttribute('id', 'activitiesTab')
-  activitiesTabElem.setAttribute('data-view-component', 'true')
-  activitiesTabElem.setAttribute('class', 'd-inline-flex UnderlineNav-item')
-  // activitiesTabElem.style.background = '#171B21';
+  if (isProfile) {
+    var parentElem = $("ul.UnderlineNav-body")[0];
+    // create new li element for activities. append activitiesTabElem to parent nav
+    var activitiesTabElem = document.createElement("li");
+    activitiesTabElem.setAttribute('id', 'activitiesTab')
+    activitiesTabElem.setAttribute('data-view-component', 'true')
+    activitiesTabElem.setAttribute('class', 'd-inline-flex UnderlineNav-item')
+    parentElem.appendChild(activitiesTabElem);
 
-  // create span element for the tab text abd append to href
-  var spanText = document.createElement("span")
-  spanText.style.color = '#D9DFE6';
-  spanText.setAttribute('data-view-component', 'true')
-  spanText.appendChild(document.createTextNode("Activities"));
-  let activitiesTabImg = document.createElement('img')
-  activitiesTabImg.style.marginRight = '0.5rem'
-  activitiesTabElem.appendChild(activitiesTabImg)
-  activitiesTabElem.appendChild(spanText)
+    // create span element for the tab text abd append to href
+    var spanText = document.createElement("span")
+    spanText.style.color = '#D9DFE6';
+    spanText.setAttribute('data-view-component', 'true')
+    spanText.appendChild(document.createTextNode("Activities"));
+    let activitiesTabImg = document.createElement('img')
+    activitiesTabImg.style.marginRight = '0.5rem'
+    activitiesTabElem.appendChild(activitiesTabImg)
+    activitiesTabElem.appendChild(spanText)
+  }
 
-  // append activitiesTabElem to parent nav
-  parentElem.appendChild(activitiesTabElem);
 
   // ACTIONS
   //open dialog when activity tab is clicked
