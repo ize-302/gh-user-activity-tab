@@ -1,10 +1,10 @@
 {
   "name": "Githb User Activity",
   "version": "1.0.0",
-  "description": "",
+  "description": "Chrome extension to view activities of a github user",
   "offline_enabled": true,
   "manifest_version": 3,
-  "author": "",
+  "author": "Adavize Hassan",
   "action": {},
   "background": {
     "service_worker": "background.js"
@@ -12,8 +12,14 @@
   "content_scripts": [
     {
       "matches": ["https://github.com/*"],
-      "js": ["jquery.js", "contentScript.js"],
+      "js": ["jquery.js", "dialog.js", "contentScript.js"],
       "css": ["content.css"]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["assets/*"],
+      "matches": ["<all_urls>"]
     }
   ],
   "permissions": ["tabs", "activeTab", "scripting"],

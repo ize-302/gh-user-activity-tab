@@ -1,0 +1,13 @@
+.dialog-content-animation {
+  animation-duration: 0.25s;
+  animation-timing-function: cubic-bezier(0.33, 1, 0.68, 1);
+  animation-delay: 0s;
+  animation-iteration-count: 1;
+  animation-direction: normal;
+  animation-fill-mode: none;
+  animation-play-state: running;
+  animation-name: Overlay--motion-slideInRight;
+  animation-timeline: auto;
+  animation-range-start: normal;
+  animation-range-end: normal;
+}
