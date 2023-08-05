@@ -16,6 +16,20 @@ function createAppropriateElement(activity) {
     actionWrapper.innerText = 'Starred '
     activityElem.appendChild(actionWrapper)
   }
+  if (activity.type === 'PushEvent') {
+    actionWrapper.innerText = 'Pushed a '
+    activityElem.appendChild(actionWrapper)
+    // commit
+    let commitlinkWrapper = document.createElement('a')
+    commitlinkWrapper.setAttribute('href', `https://github.com/${activity.repo.name}/commit/${activity.payload.commits[0].sha}`)
+    commitlinkWrapper.setAttribute('class', 'Link--primary no-underline wb-break-all')
+    commitlinkWrapper.setAttribute('target', '_blank')
+    commitlinkWrapper.innerText = ' commit '
+    actionWrapper.appendChild(commitlinkWrapper)
+    let span = document.createElement('span')
+    span.innerText = ' to '
+    actionWrapper.appendChild(span)
+  }
   if (activity.type === 'ReleaseEvent') {
     actionWrapper.innerText = 'Released '
     activityElem.appendChild(actionWrapper)
@@ -27,10 +41,10 @@ function createAppropriateElement(activity) {
     versionlinkWrapper.innerText = activity.payload.release.tag_name
     actionWrapper.appendChild(versionlinkWrapper)
     let span = document.createElement('span')
-    span.innerText = ' Of '
+    span.innerText = ' of '
     actionWrapper.appendChild(span)
   }
-  if (activity.type === 'PublicEvent' || activity.type === 'WatchEvent' || activity.type === 'ReleaseEvent') {
+  if (activity.type === 'PublicEvent' || activity.type === 'WatchEvent' || activity.type === 'ReleaseEvent' || activity.type === 'PushEvent') {
     let linkWrapper = document.createElement('a')
     linkWrapper.setAttribute('href', `https://github.com/${activity.repo.name}`)
     linkWrapper.setAttribute('class', 'Link--primary no-underline wb-break-all')
@@ -40,17 +54,7 @@ function createAppropriateElement(activity) {
   }
   if (activity.type === 'PublicEvent') {
     let span = document.createElement('span')
-    span.innerText = ' Public 🥫'
-    actionWrapper.appendChild(span)
-  }
-  if (activity.type === 'WatchEvent') {
-    let span = document.createElement('span')
-    span.innerText = ' ⭐'
-    actionWrapper.appendChild(span)
-  }
-  if (activity.type === 'ReleaseEvent') {
-    let span = document.createElement('span')
-    span.innerText = ' 🔖'
+    span.innerText = ' Public'
     actionWrapper.appendChild(span)
   }
 
@@ -78,7 +82,7 @@ async function fetchActivities() {
   });
   if (!activities.error) {
     console.log(activities)
-    activities.filter(activity => ['PublicEvent', 'WatchEvent', 'ReleaseEvent'].includes(activity.type)).map((activity) => {
+    activities.filter(activity => ['PublicEvent', 'WatchEvent', 'ReleaseEvent', 'PushEvent'].includes(activity.type)).map((activity) => {
       createAppropriateElement(activity)
     })
   } else {
