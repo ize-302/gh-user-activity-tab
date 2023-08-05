@@ -4,7 +4,7 @@ chrome.runtime.onInstalled.addListener(() => {
 
 
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
-  if (message.action === 'makeApiRequest') {
+  if (message.action === 'fetchActivities' || message.action === 'fetchRepoData') {
     const { url, options } = message.payload;
     fetch(url, options)
       .then(response => response.json())
