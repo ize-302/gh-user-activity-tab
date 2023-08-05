@@ -50,6 +50,12 @@ dialogMainHeader.appendChild(closeButton)
 let closeButtonImg = document.createElement('img')
 closeButton.append(closeButtonImg)
 
+// create dialogbody, append to dialogcontent
+let dialogBody = document.createElement('div')
+dialogBody.setAttribute('class', 'Overlay-body dialogBody')
+dialogBody.setAttribute('styles', 'height: 100%; background: red; display: flex; flex-direction: column; gap: 10px')
+dialogContent.appendChild(dialogBody)
+
 // append dialog element to body
 document.querySelector('body').appendChild(dialog)
 
@@ -73,13 +79,16 @@ $(document).ready(() => {
     activitiesTabImg.style.marginRight = '0.5rem'
     activitiesTabElem.appendChild(activitiesTabImg)
     activitiesTabElem.appendChild(spanText)
+    let activitiesTabFireImg = document.createElement('img')
+    activitiesTabFireImg.setAttribute('style', 'margin-left: 0.2rem; position: relative; top: -1px')
+    activitiesTabElem.appendChild(activitiesTabFireImg)
+
+
+    // ACTIONS
+    //open dialog when activity tab is clicked
+    $("ul.UnderlineNav-body li:last-child").click(function () {
+      dialog.setAttribute('open', true) // opens dialog
+      document.querySelector('body').style.overflow = 'hidden'
+    });
   }
-
-
-  // ACTIONS
-  //open dialog when activity tab is clicked
-  $("ul.UnderlineNav-body li:last-child").click(function () {
-    dialog.setAttribute('open', true) // opens dialog
-    document.querySelector('body').style.overflow = 'hidden'
-  });
 });
