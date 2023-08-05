@@ -53,7 +53,7 @@ closeButton.append(closeButtonImg)
 // create dialogbody, append to dialogcontent
 let dialogBody = document.createElement('div')
 dialogBody.setAttribute('class', 'Overlay-body dialogBody')
-dialogBody.setAttribute('styles', 'height: 100%; background: red; display: flex; flex-direction: column; gap: 10px')
+dialogBody.setAttribute('style', 'height: 100%; display: flex; flex-direction: column; gap: 1rem; padding: 1rem')
 dialogContent.appendChild(dialogBody)
 
 // append dialog element to body
