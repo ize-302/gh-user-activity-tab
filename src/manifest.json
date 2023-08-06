@@ -12,7 +12,7 @@
   "content_scripts": [
     {
       "matches": ["https://github.com/*"],
-      "js": ["jquery.js", "content.js"],
+      "js": ["jquery.min.js", "dayjs.min.js", "utc.min.js", "content.js"],
       "css": ["content.css"]
     }
   ],
