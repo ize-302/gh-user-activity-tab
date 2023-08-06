@@ -2,7 +2,6 @@ chrome.runtime.onInstalled.addListener(() => {
   console.log('hi, gH')
 });
 
-
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   if (message.action === 'fetchActivities' || message.action === 'fetchRepoData') {
     const { url, options } = message.payload;
