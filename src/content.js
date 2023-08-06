@@ -32,36 +32,48 @@ async function fetchActivities() {
     filteredactivities.map(activity => {
       let repoLinkElem = `<a href='https://github.com/${activity.repo.name}' class='Link--primary no-underline wb-break-all' target='_blank'>${activity.repo.name}</a>`
       row = '<div>'
+      console.log(activity)
       switch (activity.type) {
         // PublicEvent
         case 'PublicEvent':
-          row += `<span class='color-fg-muted' style="display: flex; align-items: center; gap: 4px"><img src='${chrome.runtime.getURL("assets/world.svg")}' width='16px' /> made ${repoLinkElem} public</span>`;
+          row += `<span class='color-fg-muted' style="display: flex; align-items: center; gap: 4px">
+          <img src='${chrome.runtime.getURL("assets/world.svg")}' width='16px' /> made ${repoLinkElem} public
+          · ${dayjs(activity.created_at).format('DD MMM YYYY')} 
+          </span>`;
           break;
         // WatchEvent
         case 'WatchEvent':
-          row += `<span class='color-fg-muted' style="display: flex; align-items: center; gap: 4px"><img src='${chrome.runtime.getURL("assets/star.svg")}' width='16px' /> starred ${repoLinkElem}</span>`;
+          row += `<span class='color-fg-muted' style="display: flex; align-items: center; gap: 4px"><img src='${chrome.runtime.getURL("assets/star.svg")}' width='16px' /> starred ${repoLinkElem}
+          · ${dayjs(activity.created_at).format('DD MMM YYYY')} 
+          </span>`;
           break;
         // PushEvent
         case 'PushEvent':
-          row += `<span class='color-fg-muted' style="display: flex; align-items: center; gap: 4px"><img src='${chrome.runtime.getURL("assets/git-commit.svg")}' width='16px' /> pushed a 
+          row += `<span class='color-fg-muted' style="display: flex; align-items: center; gap: 4px"><img src='${chrome.runtime.getURL("assets/git-commit.svg")}' width='16px' /> created a 
           <a href='https://github.com/${activity.repo.name}/commit/${activity?.payload?.commits[0]?.sha}' class='Link--primary no-underline wb-break-all' target='_blank'>commit</a>
-          to ${repoLinkElem}</span>`;
+          to ${repoLinkElem}
+          · ${dayjs(activity.created_at).format('DD MMM YYYY')} 
+          </span>`;
           break;
         // PushEvent
         case 'PushEvent':
           row += `<span class='color-fg-muted' style="display: flex; align-items: center; gap: 4px">
           <img src='${chrome.runtime.getURL("assets/git-commit.svg")}' width='16px' />pushed a 
           <a href='https://github.com/${activity.repo.name}/commit/${activity?.payload?.commits[0]?.sha}' class='Link--primary no-underline wb-break-all' target='_blank'>commit</a>
-          to ${repoLinkElem}</span>`;
+          to ${repoLinkElem}
+          · ${dayjs(activity.created_at).format('DD MMM YYYY')} 
+          </span>`;
           break;
         // ReleaseEvent
         case 'ReleaseEvent':
           row += `<span class='color-fg-muted' style="display: flex; align-items: center; gap: 4px">
           <img src='${chrome.runtime.getURL("assets/tag.svg")}' width='16px' />released 
           <a href='${activity?.payload?.release?.html_url}' class='Link--primary no-underline wb-break-all' target='_blank'>${activity?.payload?.release?.tag_name}</a>
-          of ${repoLinkElem}</span>`;
+          of ${repoLinkElem}
+          · ${dayjs(activity.created_at).format('DD MMM YYYY')} 
+          </span>`;
       }
-      row += '</div>'
+      row += `</div>`
       ghuaBodyElem.append(row)
     })
   } else {
